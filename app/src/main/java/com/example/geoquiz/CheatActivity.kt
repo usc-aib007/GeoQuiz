@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 
 const val EXTRA_ANSWER_SHOWN = "com.example.geoquiz.answer_shown"
-private const val EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true"
-private const val KEY_ANSWER_SHOWN = "answer_shown"
 
 class CheatActivity : AppCompatActivity() {
 
@@ -25,14 +23,11 @@ class CheatActivity : AppCompatActivity() {
 
         answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
 
-        // Set default result in case the user does not click "Show Answer"
-        setAnswerShownResult(false)
-
+        // Restore state if available
         if (savedInstanceState != null) {
             answerShown = savedInstanceState.getBoolean(KEY_ANSWER_SHOWN, false)
             if (answerShown) {
                 showAnswer()
-                setAnswerShownResult(true)
             }
         }
 
@@ -45,9 +40,9 @@ class CheatActivity : AppCompatActivity() {
             setAnswerShownResult(true)
         }
 
+        // Update UI if answer was already shown before rotation
         if (answerShown) {
             showAnswer()
-            setAnswerShownResult(true)
         }
     }
 
